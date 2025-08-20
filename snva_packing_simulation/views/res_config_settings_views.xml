@@ -34,39 +34,34 @@
                                     <div class="text-muted">
                                         Add the product dimension field mappings to use for simulation (width, height, etc).
                                     </div>
-                                    
-                                    <field name="snva_pallet_product_config_ids"
-                                        mode="tree,form"
-                                        
+                                    <field name="snva_pallet_product_config_ids" invisible="1"
+                                        mode="tree"
+                                        create="0" edit="0" delete="0"
+                                        readonly="1"
                                         nolabel="1"
+                                        context="{'force_company': company_id}"
+                                        domain="[('snva_product_ref_company_id','=', company_id)]">
+
+                                        <!-- Vista tipo lista solo lectura -->
+                                        <tree string="Pallet Mapping" editable="false">
+                                            <field name="snva_product_ref_name"/>
+                                            <field name="snva_product_ref_width"/>
+                                            <field name="snva_product_ref_height"/>
+                                            <field name="snva_product_ref_length"/>
+                                            <field name="snva_product_ref_weight"/>
+                                            <field name="snva_product_ref_company_id" groups="base.group_system"/>
+                                        </tree>
+                                    </field>
+
+                                    <!-- Botón personalizado para abrir el formulario de creación -->
+                                    <button name="%(action_snva_product_pallet_config)d"
+                                        type="action"
+                                        string="Add Pallet Mapping"
+                                        class="btn btn-primary mt16"
                                         context="{
                                             'default_snva_product_ref_company_id': company_id,
                                             'force_company': company_id
-                                        }"
-                                        domain="[('snva_product_ref_company_id','=', company_id)]">
-
-                                        <tree editable="bottom" string="Pallet Mapping">
-                                            <field name="snva_product_ref_name" required="1"/>
-                                            <field name="snva_product_ref_width" required="1"/>
-                                            <field name="snva_product_ref_height" required="1"/>
-                                            <field name="snva_product_ref_length" required="1"/>
-                                            <field name="snva_product_ref_weight" required="1" />
-                                            <field name="snva_product_ref_company_id" required="1" groups="base.group_system"/>
-                                        </tree>
-
-                                        <form string="Pallet Mapping">
-                                            <group>
-                                                <field name="snva_product_ref_name" required="1"/>
-                                                <field name="snva_product_ref_company_id" readonly="1"/>
-                                            </group>
-                                            <group string="Product Fields">
-                                                <field name="snva_product_ref_width"  required="1"/>
-                                                <field name="snva_product_ref_height" required="1"/>
-                                                <field name="snva_product_ref_length" required="1"/>
-                                                <field name="snva_product_ref_weight" required="1"/>
-                                            </group>
-                                        </form>
-                                    </field>
+                                        }"/>
                                 </div>
                             </div>
                         </div>

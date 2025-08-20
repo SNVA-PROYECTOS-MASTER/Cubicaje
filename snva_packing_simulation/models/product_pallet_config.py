@@ -48,17 +48,17 @@ class SnvaProductPalletConfig(models.Model):
         'Ya existe una configuración de pallet para esta compañía.')
     ]
 
-    @api.model_create_multi
-    def create(self, vals_list):
-        for vals in vals_list:
-            missing_fields = [
-                f for f in ['snva_product_ref_width', 'snva_product_ref_height',
-                            'snva_product_ref_length', 'snva_product_ref_weight']
-                if not vals.get(f)
-            ]
-            if missing_fields:
-                raise ValidationError(_("Missing required fields: %s") % ", ".join(missing_fields))
-        return super().create(vals_list)
+    # @api.model_create_multi
+    # def create(self, vals_list):
+    #     for vals in vals_list:
+    #         missing_fields = [
+    #             f for f in ['snva_product_ref_width', 'snva_product_ref_height',
+    #                         'snva_product_ref_length', 'snva_product_ref_weight']
+    #             if not vals.get(f)
+    #         ]
+    #         if missing_fields:
+    #             raise ValidationError(_("Missing required fields: %s") % ", ".join(missing_fields))
+    #     return super().create(vals_list)
 
     @api.model
     def _get_product_field_selection_sudo(self):
