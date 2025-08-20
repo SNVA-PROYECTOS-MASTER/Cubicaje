@@ -37,7 +37,7 @@
                                     
                                     <field name="snva_pallet_product_config_ids"
                                         mode="tree,form"
-                                        create="1" edit="1" delete="1"
+                                        
                                         nolabel="1"
                                         context="{
                                             'default_snva_product_ref_company_id': company_id,
@@ -46,12 +46,12 @@
                                         domain="[('snva_product_ref_company_id','=', company_id)]">
 
                                         <tree editable="bottom" string="Pallet Mapping">
-                                            <field name="snva_product_ref_name"/>
-                                            <field name="snva_product_ref_width"/>
-                                            <field name="snva_product_ref_height"/>
-                                            <field name="snva_product_ref_length"/>
-                                            <field name="snva_product_ref_weight"/>
-                                            <field name="snva_product_ref_company_id" groups="base.group_system"/>
+                                            <field name="snva_product_ref_name" required="1"/>
+                                            <field name="snva_product_ref_width" required="1"/>
+                                            <field name="snva_product_ref_height" required="1"/>
+                                            <field name="snva_product_ref_length" required="1"/>
+                                            <field name="snva_product_ref_weight" required="1" />
+                                            <field name="snva_product_ref_company_id" required="1" groups="base.group_system"/>
                                         </tree>
 
                                         <form string="Pallet Mapping">
