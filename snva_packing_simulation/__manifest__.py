@@ -23,7 +23,7 @@
   'category': 'Website',
   'version': '1.0',
   'license': 'OPL-1', 
-  'depends': ['web', 'base', 'stock'],
+  'depends': ['web', 'base', 'stock'], 
   "data": [
         "security/ir.model.access.csv",
         "views/pallet_setting_data_views.xml",
