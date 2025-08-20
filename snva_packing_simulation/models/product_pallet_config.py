@@ -1,11 +1,12 @@
 from odoo import models, fields, api, _
+from odoo import models, fields, api, _
+from odoo.exceptions import ValidationError
 
 class SnvaProductPalletConfig(models.Model):
     _name = 'snva.product.pallet.config'
     _description = 'Default Pallet Configuration per Company'
     _rec_name = 'snva_product_ref_name'
 
-    # Se definen los campos de configuración
     snva_product_ref_name = fields.Char(
         string="Name",
         required=True,
@@ -33,7 +34,6 @@ class SnvaProductPalletConfig(models.Model):
         required=True
     )
 
-    # Campo de compañías
     snva_product_ref_company_id = fields.Many2one(
         comodel_name='res.company',
         string="Company",
@@ -44,23 +44,24 @@ class SnvaProductPalletConfig(models.Model):
 
     _sql_constraints = [
         ('snva_company_unique',
-         'unique(snva_product_ref_company_id)',
-         'Ya existe una configuración de pallet para esta compañía.')
+        'unique(snva_product_ref_company_id)',
+        'Ya existe una configuración de pallet para esta compañía.')
     ]
 
-    # --- Opciones de selección ---
-    def _get_product_field_selection(self):
-        """Versión sin sudo (si editas el modelo directo)."""
-        model = self.env['ir.model'].search([('model', '=', 'product.template')], limit=1)
-        fields_obj = self.env['ir.model.fields'].search([
-            ('model_id', '=', model.id),
-            ('ttype', 'in', ['float', 'integer']),
-        ])
-        return [(f.name, f.field_description or f.name) for f in fields_obj]
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            missing_fields = [
+                f for f in ['snva_product_ref_width', 'snva_product_ref_height',
+                            'snva_product_ref_length', 'snva_product_ref_weight']
+                if not vals.get(f)
+            ]
+            if missing_fields:
+                raise ValidationError(_("Missing required fields: %s") % ", ".join(missing_fields))
+        return super().create(vals_list)
 
     @api.model
     def _get_product_field_selection_sudo(self):
-        """Usar en Ajustes para opciones estables independientemente de permisos/contexto."""
         model = self.env['ir.model'].sudo().search([('model', '=', 'product.template')], limit=1)
         fields_obj = self.env['ir.model.fields'].sudo().search([
             ('model_id', '=', model.id),

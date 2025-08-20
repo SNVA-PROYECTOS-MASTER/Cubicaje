@@ -1,42 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <data>
+
         <record id="res_config_settings_view_form_inherit_inventory_pallet" model="ir.ui.view">
             <field name="name">res.config.settings.view.form.inherit.inventory.pallet</field>
             <field name="model">res.config.settings</field>
-            <!-- Heredas el form de ajustes de Stock (Odoo 14) -->
             <field name="inherit_id" ref="stock.res_config_settings_view_form"/>
             <field name="arch" type="xml">
 
-                <!-- Inserta un bloque propio después del ÚLTIMO app_settings_block -->
+                <!-- Insertamos después del último bloque de configuración -->
                 <xpath expr="//div[contains(@class,'app_settings_block')][last()]" position="after">
                     <div class="app_settings_block" data-group="snva_packing_simulation">
                         <h2>SNVA - Packing Simulation</h2>
 
-                        <!-- Token -->
+                        <!-- Campo: Token de licencia -->
                         <div class="row mt16 o_settings_container">
                             <div class="col-12 o_setting_box">
-                                
                                 <div class="o_setting_right_pane">
                                     <label for="snva_packing_license_token"/>
-                                    <div class="text-muted">License token used by the Packing viewer.</div>
+                                    <div class="text-muted">
+                                        License token used by the Packing viewer.
+                                    </div>
                                     <field name="snva_packing_license_token" placeholder="Ej: QCO0X727Q2XI"/>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- O2M de configuraciones -->
+                        <!-- Campo O2M: configuración de mapeo de campos -->
                         <div class="row mt16 o_settings_container">
                             <div class="col-12 o_setting_box">
                                 <div class="o_setting_right_pane">
                                     <label for="snva_pallet_product_config_ids"/>
                                     <div class="text-muted">
-                                        Adds the ratio of the height, width and depth fields based on the product’s dimensions (if they exist).
+                                        Add the product dimension field mappings to use for simulation (width, height, etc).
                                     </div>
-                                    <field name="snva_pallet_product_config_ids" mode="tree,form" create="1" edit="1" delete="1" nolabel="1" context="{'default_snva_product_ref_company_id': company_id, 'force_company': company_id}" domain="[('snva_product_ref_company_id','=', company_id)]">
+                                    
+                                    <field name="snva_pallet_product_config_ids"
+                                        mode="tree,form"
+                                        create="1" edit="1" delete="1"
+                                        nolabel="1"
+                                        context="{
+                                            'default_snva_product_ref_company_id': company_id,
+                                            'force_company': company_id
+                                        }"
+                                        domain="[('snva_product_ref_company_id','=', company_id)]">
 
-                                        <!-- LISTA: solo lectura (sin editable) -->
-                                        <tree string="Pallet Mapping">
+                                        <tree editable="bottom" string="Pallet Mapping">
                                             <field name="snva_product_ref_name"/>
                                             <field name="snva_product_ref_width"/>
                                             <field name="snva_product_ref_height"/>
@@ -45,15 +54,12 @@
                                             <field name="snva_product_ref_company_id" groups="base.group_system"/>
                                         </tree>
 
-                                        <!-- FORMULARIO: edición/creación real -->
                                         <form string="Pallet Mapping">
                                             <group>
                                                 <field name="snva_product_ref_name" required="1"/>
                                                 <field name="snva_product_ref_company_id" readonly="1"/>
                                             </group>
-                                            <group string="Product fields">
-                                                <!-- Si estos campos son de tipo selection en el modelo,
-                                                    Odoo ya usará el widget correcto: no fuerces widget="selection" -->
+                                            <group string="Product Fields">
                                                 <field name="snva_product_ref_width"  required="1"/>
                                                 <field name="snva_product_ref_height" required="1"/>
                                                 <field name="snva_product_ref_length" required="1"/>
@@ -66,6 +72,7 @@
                         </div>
                     </div>
                 </xpath>
+
             </field>
         </record>
 
