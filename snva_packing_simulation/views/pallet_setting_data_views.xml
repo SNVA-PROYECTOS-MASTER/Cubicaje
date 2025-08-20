@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- Acción para abrir vista de lista y agregamos un mensaje por si no existen datos -->
+    <record id="action_pallet_setting_data" model="ir.actions.act_window">
+        <field name="name">Pallet Configuration</field>
+        <field name="res_model">snva.pallet.setting.data</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Configure the available pallet sizes and limits for cubic calculations.
+            </p>
+        </field>
+    </record>
+
+    <!-- List view -->
+    <record id="view_pallet_setting_list" model="ir.ui.view">
+        <field name="name">snva.pallet.setting.data.list</field>
+        <field name="model">snva.pallet.setting.data</field>
+        <field name="arch" type="xml">
+            <tree string="Pallets">
+                <field name="snva_pallet_image" widget="image" class="oe_avatar" options="{'preview_image': 'snva_pallet_image', 'size': [48, 48]}"/>
+                <field name="snva_pallet_name"/>
+                <field name="snva_pallet_weight"/>
+                <field name="snva_pallet_length"/>
+                <field name="snva_pallet_width"/>
+                <field name="snva_pallet_height"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form view -->
+    <record id="view_pallet_setting_form" model="ir.ui.view">
+        <field name="name">snva.pallet.setting.data.form</field>
+        <field name="model">snva.pallet.setting.data</field>
+        <field name="arch" type="xml">
+            <form string="Pallet Configuration">
+                <sheet>
+                    <group>
+                        <field name="snva_pallet_image" widget="image" class="oe_avatar" options="{'preview_image': 'snva_pallet_image'}"/>
+                    </group>
+                    <group>
+                        <field name="snva_pallet_name"/>
+                        <field name="snva_pallet_weight"/>
+                        <field name="snva_pallet_length"/>
+                        <field name="snva_pallet_width"/>
+                        <field name="snva_pallet_height"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+</odoo>

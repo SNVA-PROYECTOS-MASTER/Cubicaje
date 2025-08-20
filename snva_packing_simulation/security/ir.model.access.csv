@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_snva_pallet_simulation_manager,snva_pallet_simulation_manager,model_snva_pallet_simulation,,1,1,1,1
+access_snva_pallet_setting_data_manager,snva_pallet_setting_data_manager,model_snva_pallet_setting_data,,1,1,1,1
+access_snva_product_pallet_config_manager,snva_product_pallet_config_manager,model_snva_product_pallet_config,,1,1,1,1
+access_snva_pallet_simulation_packages_manager,snva_pallet_simulation_packages_manager,model_snva_pallet_simulation_packages,,1,1,1,1

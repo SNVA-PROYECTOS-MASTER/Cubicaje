@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Acción principal -->
+    <record id="action_pallet_simulation" model="ir.actions.act_window">
+        <field name="name">Packing Simulation</field>
+        <field name="res_model">snva.pallet.simulation</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                There are no simulations created
+            </p>
+        </field>
+    </record>
+
+    <!-- Lista -->
+    <record id="view_snva_pallet_simulation_tree" model="ir.ui.view">
+        <field name="name">view.snva.pallet.simulation.tree</field>
+        <field name="model">snva.pallet.simulation</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="snva_simulation_name"/>
+                <field name="snva_simulation_pallet"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Formulario -->
+    <record id="view_snva_pallet_simulation_form" model="ir.ui.view">
+        <field name="name">view.snva.pallet.simulation.form</field>
+        <field name="model">snva.pallet.simulation</field>
+        <field name="arch" type="xml">
+            <form string="Snva Pallet Simulation">
+                <sheet>
+                    <group>
+                        <p>
+                            <i class="fa fa-info-circle fa-fw text-info"></i>
+                            Please complete the following fields to begin the pallet simulation process.
+                        </p>
+                    </group>
+                    <group>
+                        <field name="snva_simulation_name" placeholder="Enter simulation name..."/>
+                        <field name="snva_simulation_pallet"/>
+                    </group>
+                    <group string="Selected Pallet Details" colspan="2" attrs="{'invisible': [('snva_simulation_pallet','=',False)]}">
+                        <group>
+                            <field name="snva_simulation_pallet_weight" readonly="1"/>
+                            <field name="snva_simulation_pallet_length" readonly="1"/>
+                            <field name="snva_simulation_pallet_width" readonly="1"/>
+                            <field name="snva_simulation_pallet_height" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="snva_simulation_pallet_image" readonly="1" widget="image" class="oe_avatar"
+                                   options="{'preview_image': 'snva_simulation_pallet_image'}"/>
+                        </group>
+                    </group>
+
+                    <group>
+                        <button name="open_simulation_packing" type="object" icon="fa-cubes"
+                                string="Pallet Simulation" class="btn-primary"/>
+                    </group>
+
+                    <notebook>
+                        <page string="Packages">
+                            <field name="snva_simulation_package_ids">
+                                <tree editable="bottom">
+                                    <field name="snva_package_name"/>
+                                    <field name="snva_package_weight"/>
+                                    <field name="snva_package_length"/>
+                                    <field name="snva_package_width"/>
+                                    <field name="snva_package_height"/>
+                                    <field name="snva_package_quantity"/>
+                                    <field name="snva_package_color" widget="color"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Búsqueda -->
+    <record id="view_snva_pallet_simulation_search" model="ir.ui.view">
+        <field name="name">view.snva.pallet.simulation.search</field>
+        <field name="model">snva.pallet.simulation</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="snva_simulation_name"/>
+                <filter string="Name" name="group_by_name" context="{'group_by':'snva_simulation_name'}"/>
+            </search>
+        </field>
+    </record>
+
+
+</odoo>

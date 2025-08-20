@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem id="menu_packing_simulation_root"
+        name="Packing Simulation"
+        sequence="10"
+        action="snva_packing_simulation.action_pallet_simulation"
+        web_icon="snva_packing_simulation,static/description/icon.png"/>
+
+    <menuitem id="menu_pallet_home_simulation"
+        name="Home"
+        parent="menu_packing_simulation_root"
+        sequence="10"
+        action="snva_packing_simulation.action_pallet_simulation"/>
+
+    <menuitem id="menu_pallet_settings" name="Settings" parent="menu_packing_simulation_root" sequence="11"/>
+    <menuitem id="menu_pallet_setting_data" name="Pallets" parent="menu_pallet_settings"
+        action="snva_packing_simulation.action_pallet_setting_data" sequence="11"/>
+
+
+</odoo>

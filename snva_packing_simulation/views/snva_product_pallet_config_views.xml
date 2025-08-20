@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Tree View -->
+    <record id="view_snva_product_pallet_config_list" model="ir.ui.view">
+        <field name="name">snva.product.pallet.config.list</field>
+        <field name="model">snva.product.pallet.config</field>
+        <field name="arch" type="xml">
+            <tree string="Pallet Configurations">
+                <field name="snva_product_ref_name"/>
+                <field name="snva_product_ref_weight"/>
+                <field name="snva_product_ref_length"/>
+                <field name="snva_product_ref_width"/>
+                <field name="snva_product_ref_height"/>
+                <field name="snva_product_ref_company_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_snva_product_pallet_config_form" model="ir.ui.view">
+        <field name="name">snva.product.pallet.config.form</field>
+        <field name="model">snva.product.pallet.config</field>
+        <field name="arch" type="xml">
+            <form string="Pallet Configuration">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="snva_product_ref_name"/>
+                        <h1>
+                            <field name="snva_product_ref_name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <field name="snva_product_ref_company_id" readonly="1"/>
+                        <field name="snva_product_ref_weight"/>
+                        <field name="snva_product_ref_length"/>
+                        <field name="snva_product_ref_width"/>
+                        <field name="snva_product_ref_height"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="view_snva_product_pallet_config_search" model="ir.ui.view">
+        <field name="name">snva.product.pallet.config.search</field>
+        <field name="model">snva.product.pallet.config</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="snva_product_ref_name"/>
+                <filter string="Company" name="company" domain="[]" context="{'group_by': 'snva_product_ref_company_id'}"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_snva_product_pallet_config" model="ir.actions.act_window">
+        <field name="name">Pallet Configurations</field>
+        <field name="res_model">snva.product.pallet.config</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click to create a new pallet configuration for your products.
+            </p>
+        </field>
+    </record>
+
+</odoo>

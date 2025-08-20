@@ -1,0 +1,52 @@
+# Archivos y carpetas de Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+*.egg
+*.pyo
+*.pyd
+.Python
+
+# Entornos virtuales
+env/
+venv/
+ENV/
+.venv/
+
+# Archivos de logs y temporales
+*.log
+*.pot
+*.mo
+*.swp
+*.swo
+*.tmp
+
+# Archivos de configuración locales
+*.ini
+*.cfg
+*.local
+*.env
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
+
+# Carpetas de Odoo
+/.idea/
+/.vscode/
+/.odoo_session_dir
+*.iml
+
+# Archivos de base de datos locales
+*.db
+*.sqlite3
+
+# Carpeta de dependencias (si aplicara en tu repo)
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Archivos compilados de Odoo
+addons/*/static/lib/*
+addons/*/static/src/js/build/*
+addons/*/static/src/scss/build/*
