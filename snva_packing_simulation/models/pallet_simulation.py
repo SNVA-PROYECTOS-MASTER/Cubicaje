@@ -88,7 +88,7 @@ class SnvaPalletSimulation(models.Model):
         encoded_data = base64.urlsafe_b64encode(json_bytes).decode("utf-8")
 
         # URL del visor (ajusta host/puerto según tu entorno)
-        target_url = f"https://sinova-test-280325-20135684.dev.odoo.com/packing/viewer?key={licence_key}&q={quote(encoded_data)}"
+        target_url = f"https://demo.sinova.co/packing/viewer?key={licence_key}&q={quote(encoded_data)}"
 
         # Acción
         return {
