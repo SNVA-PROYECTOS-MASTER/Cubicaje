@@ -71,6 +71,7 @@
                                     <field name="snva_package_height"/>
                                     <field name="snva_package_quantity"/>
                                     <field name="snva_package_color" widget="color"/>
+                                    <field name="snva_package_brand"/>
                                 </tree>
                             </field>
                         </page>
@@ -90,6 +91,64 @@
                 <filter string="Name" name="group_by_name" context="{'group_by':'snva_simulation_name'}"/>
             </search>
         </field>
+    </record>
+
+    <!-- Botones en el formulario de la simulación -->
+    <record id="view_snva_pallet_simulation_form_inherit_import_btn" model="ir.ui.view">
+        <field name="name">view.snva.pallet.simulation.form.inherit.import.btn</field>
+        <field name="model">snva.pallet.simulation</field>
+        <field name="inherit_id" ref="snva_packing_simulation.view_snva_pallet_simulation_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[button[@name='open_simulation_packing']]" position="after">
+                <group>
+                    <button name="action_open_import_wizard"
+                            string="Import Packages from Excel"
+                            type="object"
+                            class="btn-secondary"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Wizard: vista -->
+    <record id="view_snva_import_packages_wizard_form" model="ir.ui.view">
+        <field name="name">snva.import.packages.wizard.form</field>
+        <field name="model">snva.import.packages.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Import Packages (XLSX)" create="false" edit="false">
+                <group>
+                    <field name="simulation_id" readonly="1"/>
+                </group>
+                <group>
+                    <field name="file_xlsx" filename="filename"/>
+                    <field name="filename"/>
+                </group>
+                <group>
+                    <field name="sheet_name"/>
+                    <field name="has_header"/>
+                    <field name="start_row"/>
+                </group>
+                <group>
+                    <field name="help_note" nolabel="1" readonly="1"/>
+                </group>
+                <footer>
+                    <button string="Download template" type="object" name="action_download_template" class="btn-secondary"/>
+                    <button string="Import" type="object" name="action_import" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+
+    <!-- Wizard: acción -->
+    <record id="action_snva_import_packages_wizard" model="ir.actions.act_window">
+        <field name="name">Import Packages</field>
+        <field name="res_model">snva.import.packages.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_snva_import_packages_wizard_form"/>
+        <field name="target">new</field>
+        <field name="context">{'default_simulation_id': active_id}</field>
     </record>
 
 

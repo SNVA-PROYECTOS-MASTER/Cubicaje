@@ -104,3 +104,16 @@ class SnvaPalletSimulation(models.Model):
         if not value:
             return 0.0
         return value * divisor
+
+    def action_open_import_wizard(self):
+        self.ensure_one()
+        view = self.env.ref('snva_packing_simulation.view_snva_import_packages_wizard_form')
+        return {
+            'type': 'ir.actions.act_window',
+            'name': _('Import Packages'),
+            'res_model': 'snva.import.packages.wizard',
+            'view_mode': 'form',
+            'view_id': view.id,
+            'target': 'new',
+            'context': {'default_simulation_id': self.id},
+        }
