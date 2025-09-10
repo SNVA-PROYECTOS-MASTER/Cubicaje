@@ -9,7 +9,7 @@ class SnvaPalletSimulationPackage(models.Model):
     _description = 'Package for Simulation'
 
     
-    snva_package_brand = fields.Char(string="Brand")
+    
     # Creamos los campos relacionados
     snva_package_name = fields.Many2one('product.template', string="Select Product", required=True)
     snva_package_width = fields.Float(string="Width (cm)", required=True)
