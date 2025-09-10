@@ -114,7 +114,6 @@ class SnvaImportPackagesWizard(models.TransientModel):
 
         synonyms = {
             "name":      ["producto en unidad", "producto", "descripcion", "descripción", "item", "articulo", "artículo", "name"],
-            "brand":     ["marca", "brand"],  # opcional
             "qty":       ["cantidad", "unidades", "pieces", "nro bultos", "unidades por caj", "unidades por caja"],
             "weight_kg": ["peso kg", "peso", "weight"],
             "length_cm": ["largo", "longitud", "length"],
@@ -130,7 +129,6 @@ class SnvaImportPackagesWizard(models.TransientModel):
 
         idx = {
             "name": _find_idx(synonyms["name"]),
-            "brand": _find_idx(synonyms["brand"]),
             "qty": _find_idx(synonyms["qty"]),
             "weight_kg": _find_idx(synonyms["weight_kg"]),
             "length_cm": _find_idx(synonyms["length_cm"]),
@@ -171,12 +169,6 @@ class SnvaImportPackagesWizard(models.TransientModel):
             width_cm  = _to_float(row[idx["width_cm"]])
             height_cm = _to_float(row[idx["height_cm"]])
 
-            # marca opcional
-            brand = ""
-            if idx.get("brand") is not None:
-                bval = row[idx["brand"]]
-                brand = str(bval).strip() if bval is not None else ""
-
             # buscar producto por nombre (exacto y tolerante)
             prod = Product.search([('name', '=', name)], limit=1)
             if not prod:
@@ -197,8 +189,7 @@ class SnvaImportPackagesWizard(models.TransientModel):
                 'snva_package_weight': weight_kg,
                 'snva_package_quantity': qty,
             }
-            if hasattr(self.env['snva.pallet.simulation.packages'], 'snva_package_brand') and brand:
-                vals['snva_package_brand'] = brand
+            
 
             commands.append((0, 0, vals))
             will_create += 1

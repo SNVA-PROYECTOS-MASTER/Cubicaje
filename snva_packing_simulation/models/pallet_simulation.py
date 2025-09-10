@@ -72,8 +72,11 @@ class SnvaPalletSimulation(models.Model):
 
         # Construcción de paquetes (v14: producto en cm / g → JSON: mm / g)
         for package in self.snva_simulation_package_ids:
+            pt = package.snva_package_name
             result["packages"].append({
                 "productName": package.snva_package_name.name or "",
+                "productCode": getattr(pt, "default_code", "") or "",
+                "productDescription": getattr(pt, "description", "") or "",
                 "productWidth":  self.safe_div(package.snva_package_width,  10),  # cm → mm
                 "productHeight": self.safe_div(package.snva_package_height, 10),  # cm → mm
                 "productLength": self.safe_div(package.snva_package_length, 10),  # cm → mm
@@ -81,7 +84,6 @@ class SnvaPalletSimulation(models.Model):
                 "productQuantity": package.snva_package_quantity or 0,
                 "productColor": package.snva_package_color or "#000000"
             })
-
         # JSON → base64 URL-safe
         json_str = json.dumps(result)
         json_bytes = json_str.encode("utf-8")

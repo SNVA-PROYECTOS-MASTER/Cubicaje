@@ -71,7 +71,6 @@
                                     <field name="snva_package_height"/>
                                     <field name="snva_package_quantity"/>
                                     <field name="snva_package_color" widget="color"/>
-                                    <field name="snva_package_brand"/>
                                 </tree>
                             </field>
                         </page>
