@@ -170,9 +170,11 @@ class SnvaImportPackagesWizard(models.TransientModel):
             height_cm = _to_float(row[idx["height_cm"]])
 
             # buscar producto por nombre (exacto y tolerante)
-            prod = Product.search([('name', '=', name)], limit=1)
+            prod = self._find_product_template_by_token(name)
             if not prod:
-                prod = Product.search([('name', 'ilike', name)], limit=1)
+                missing_products.append((row_idx, name))
+                skipped.append(_("Fila %s: producto '%s' no está registrado (ni por nombre ni por referencia interna).") % (row_idx, name))
+                continue
 
             if not prod:
                 # ⛳ acumular faltantes para informar claramente
@@ -268,3 +270,33 @@ class SnvaImportPackagesWizard(models.TransientModel):
             'mimetype': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
         })
         return {'type': 'ir.actions.act_url', 'url': '/web/content/%s?download=1' % att.id, 'target': 'self'}
+
+    def _find_product_template_by_token(self, token):
+        """Busca por default_code (template/variante) o nombre, usando métodos existentes."""
+        ProductT = self.env['product.template'].sudo()
+        ProductV = self.env['product.product'].sudo()
+        tok = (token or '').strip()
+        if not tok:
+            return ProductT.browse()
+
+        # 1) Match exacto por código (template y variante)
+        tmpl = ProductT.search(['|', ('default_code', '=', tok), ('name', '=', tok)], limit=1)
+        if tmpl:
+            return tmpl
+
+        var = ProductV.search([('default_code', '=', tok)], limit=1)
+        if var:
+            return var.product_tmpl_id
+
+        # 2) name_search (respeta overrides existentes)
+        ids = [rid for rid, _ in ProductT.name_search(tok, operator='ilike', limit=1)]
+        if ids:
+            return ProductT.browse(ids[0])
+
+        # 3) Búsqueda amplia: nombre / default_code / código de variantes
+        domain = ['|', '|',
+                ('name', 'ilike', tok),
+                ('default_code', 'ilike', tok),
+                ('product_variant_ids.default_code', 'ilike', tok)]
+        tmpl = ProductT.search(domain, limit=1)
+        return tmpl
