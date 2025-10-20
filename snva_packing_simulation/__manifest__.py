@@ -26,11 +26,12 @@
   'depends': ['web', 'base', 'stock'], 
   "data": [
         "security/ir.model.access.csv",
+        "views/snva_product_pallet_config_views.xml",
         "views/pallet_setting_data_views.xml",
         "views/res_config_settings_views.xml",
         "views/snva_pallet_simulation_views.xml",
         "views/snva_menu_options.xml",
-        "views/snva_product_pallet_config_views.xml"
+        
     ],
   'installable': True,
   'application': True,
